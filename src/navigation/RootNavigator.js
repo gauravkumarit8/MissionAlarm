@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useAlarmStore } from '../store/useAlarmStore';
 
 import HomeScreen from '../screens/HomeScreen';
 import EditAlarmScreen from '../screens/EditAlarmScreen';
@@ -10,11 +11,34 @@ import DismissSuccessScreen from '../screens/DismissSuccessScreen';
 const Stack = createStackNavigator();
 
 export default function RootNavigator() {
+  const ringingAlarm = useAlarmStore((s) => s.ringingAlarm);
+  const navigationRef = useRef(null);
+
+  // Auto-navigate to ringing screen whenever an alarm fires
+  useEffect(() => {
+    if (ringingAlarm && navigationRef.current) {
+      navigationRef.current.navigate('AlarmRinging', { alarm: ringingAlarm });
+    }
+  }, [ringingAlarm]);
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#0a0a14' }, headerTintColor: '#fff' }}>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Mission Alarm' }} />
-        <Stack.Screen name="EditAlarm" component={EditAlarmScreen} options={{ title: 'Alarm' }} />
+    <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: '#0a0a14' },
+          headerTintColor: '#fff',
+        }}
+      >
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Mission Alarm' }}
+        />
+        <Stack.Screen
+          name="EditAlarm"
+          component={EditAlarmScreen}
+          options={{ title: 'Alarm' }}
+        />
         <Stack.Screen
           name="AlarmRinging"
           component={AlarmRingingScreen}

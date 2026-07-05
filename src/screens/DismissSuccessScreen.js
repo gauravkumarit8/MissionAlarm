@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
     marginBottom: 22,
   },
   streakText: { color: '#5DCAA5', fontSize: 15, fontWeight: '600' },
-  statsRow: { flexDirection: 'row', gap: 10, marginBottom: 30 },
-  statBox: {
+  statsRow: { flexDirection: "row", marginBottom: 30, justifyContent: "center" },
+  statBox: { marginHorizontal: 5,
     backgroundColor: '#151520',
     borderWidth: 1,
     borderColor: '#2a2a3a',

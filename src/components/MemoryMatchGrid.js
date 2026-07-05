@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: 8,
+    marginBottom: 8,
   },
   card: {
     aspectRatio: 1,
